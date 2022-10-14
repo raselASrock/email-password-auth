@@ -1,5 +1,6 @@
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import React from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import app from "../../firebase/firebase.init";
@@ -9,13 +10,25 @@ const auth = getAuth(app);
 
 
 const RegisterReactBootstrap = () => {
+  const [passwordError, setPasswordError] = useState('')
 const handleRegister = (event) =>{
   event.preventDefault();
   const email = event.target.email.value;
   const password = event.target.password.value;
   console.log(email, password);
-  if(/(?=.*[A-Z].*[A-Z])/.test(password))
-
+  if(!/(?=.*[A-Z].*[A-Z])/.test(password)){
+    setPasswordError('Please provide at least two uppercase');
+    return;
+  }
+  if(password.length < 6){
+    setPasswordError('Please provide at least six character');
+    return;
+  }
+  if(!/(?=.*[!@#$%&*])/.test(password)){
+    setPasswordError("Please add at least one special character.")
+    return;
+  }
+  setPasswordError('')
   createUserWithEmailAndPassword(auth, email, password)
   .then( result =>{
     const user = result.user
@@ -38,6 +51,7 @@ const handleRegister = (event) =>{
           <Form.Label>Password</Form.Label>
           <Form.Control name="password" type="password" placeholder="Password" required/>
         </Form.Group>
+        <p className="text-danger">{passwordError}</p>
         <Button variant="primary" type="submit">
           Register
         </Button>
