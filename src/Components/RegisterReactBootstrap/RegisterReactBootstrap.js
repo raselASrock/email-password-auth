@@ -3,6 +3,7 @@ import React from "react";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { Link } from "react-router-dom";
 import app from "../../firebase/firebase.init";
 
 const auth = getAuth(app);
@@ -64,6 +65,7 @@ const handleRegister = (event) =>{
           Register
         </Button>
       </Form>
+      <p><small>Already have an Account? Please <Link to='/login'>Login</Link></small></p>
     </div>
   );
 };
