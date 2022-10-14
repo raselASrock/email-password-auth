@@ -14,6 +14,8 @@ const handleRegister = (event) =>{
   const email = event.target.email.value;
   const password = event.target.password.value;
   console.log(email, password);
+  if(/(?=.*[A-Z].*[A-Z])/.test(password))
+
   createUserWithEmailAndPassword(auth, email, password)
   .then( result =>{
     const user = result.user
