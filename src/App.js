@@ -2,6 +2,7 @@
 import './App.css';
 import {getAuth} from 'firebase/auth'
 import app from './firebase/firebase.init';
+import RegisterReactBootstrap from './Components/RegisterReactBootstrap/RegisterReactBootstrap';
 
 
 const auth = getAuth(app); 
@@ -23,14 +24,8 @@ const handlePasswprdChange = (event) =>{
 
 function App() {
   return (
-    <div className="App">
-      <form onSubmit={handleSignUp}>
-        <input onChange={handleEmailChange} type="email" name="email" id="" placeholder='Email-Please' />
-        <br />
-        <input onChange={handlePasswprdChange} type="password" name="password" id="" placeholder='Password-Here' />
-        <br/>
-        <button type='submit'>Sign Up</button>
-      </form>
+    <div className="">
+      <RegisterReactBootstrap></RegisterReactBootstrap>
     </div>
   );
 }
