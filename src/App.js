@@ -10,15 +10,24 @@ const handleSignUp = (event) =>{
   event.preventDefault();
   const email = event.target.email.value;
   const password = event.target.password.value;
-  console.log(event.target.password.value);
+  console.log(email, password);
 }
+
+const handleEmailChange = (event) =>{
+  console.log(event.target.value);
+}
+
+const handlePasswprdChange = (event) =>{
+  console.log(event.target.value);
+}
+
 function App() {
   return (
     <div className="App">
       <form onSubmit={handleSignUp}>
-        <input type="email" name="email" id="" placeholder='Email-Please' />
+        <input onChange={handleEmailChange} type="email" name="email" id="" placeholder='Email-Please' />
         <br />
-        <input type="password" name="password" id="" placeholder='Password-Here' />
+        <input onChange={handlePasswprdChange} type="password" name="password" id="" placeholder='Password-Here' />
         <br/>
         <button type='submit'>Sign Up</button>
       </form>
