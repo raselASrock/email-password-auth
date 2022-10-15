@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from "firebase/auth";
 import React from "react";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
@@ -21,10 +21,10 @@ const handleRegister = (event) =>{
   const email = form.email.value;
   const password = form.password.value;
   console.log(email, password);
-  if(!/(?=.*[A-Z].*[A-Z])/.test(password)){
-    setPasswordError('Please provide at least two uppercase');
-    return;
-  }
+  // if(!/(?=.*[A-Z].*[A-Z])/.test(password)){
+  //   setPasswordError('Please provide at least two uppercase');
+  //   return;
+  // }
   if(password.length < 6){
     setPasswordError('Please provide at least six character');
     return;
@@ -40,12 +40,21 @@ const handleRegister = (event) =>{
     console.log(user)
     setSucces(true)
     form.reset();
+    verifyEmail()
   })
   .catch(error =>{
     console.error(error);
     setPasswordError(error.message)
   })
 }
+
+const verifyEmail = () =>{
+  sendEmailVerification(auth.currentUser)
+  .then( () =>{
+    alert('Please Check Your Email.')
+  })
+}
+
 
   return (
     <div className="w-50 mx-auto">
