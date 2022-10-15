@@ -1,3 +1,4 @@
+import { Toast } from "bootstrap";
 import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import React from "react";
 import { useState } from "react";
@@ -10,6 +11,7 @@ const auth = getAuth(app)
 
 const LoginBootstrap = () => {
   const [success, setSuccess] = useState(false)
+  const [userEmail, setUserEmail] = useState('')
     const handleSubmit = event =>{
         event.preventDefault()
         setSuccess(false)
@@ -29,8 +31,24 @@ const LoginBootstrap = () => {
         })
     }
 
+    const handleEmailBlur = event =>{
+      const email = event.target.value;
+      setUserEmail(email);
+      console.log(email);
+    }
+
+
     const handleForgetPassword = () =>{
-      sendPasswordResetEmail(auth,)
+      if(!userEmail){
+        alert('Please Enter your email')
+      }
+      sendPasswordResetEmail(auth, userEmail)
+      .then(() =>{
+        alert('Reset Password Sent') 
+      })
+      .catch( error =>{
+        console.error(error);
+      })
     }
 
 
@@ -38,12 +56,16 @@ const LoginBootstrap = () => {
     <div className="w-50 mx-auto">
       <h3 className="text-primary">Please Log In</h3>
       <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3" controlId="formBasicName">
+          <Form.Label>Your Name</Form.Label>
+          <Form.Control onBlur={handleEmailBlur} name="name" type="text" placeholder="Enter Your Name" />
+          <Form.Text className="text-muted">
+            We'll never share your Data with anyone else.
+          </Form.Text>
+        </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control name="email" type="email" placeholder="Enter email" />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
+          <Form.Control onBlur={handleEmailBlur} name="email" type="email" placeholder="Enter email" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
